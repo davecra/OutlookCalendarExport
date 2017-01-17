@@ -28,6 +28,12 @@ namespace OutlookCalendarExport
             try
             {
                 RegistryKey LobjKey = Registry.CurrentUser.OpenSubKey(Common.REGPATH, false);
+                // if the key does not exist, we create it
+                if (LobjKey == null)
+                {
+                    // create it
+                    LobjKey = Registry.CurrentUser.CreateSubKey(Common.REGPATH);
+                }
                 Recipients = new ExtendedRecipientList();
                 string LstrList = LobjKey.GetValue("Recipients", "").ToString();
                 Recipients.FromRegistryString(LstrList);
